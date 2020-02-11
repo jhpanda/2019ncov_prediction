@@ -31,7 +31,7 @@ def sigm(a,b,c,x):
     model = a/(1+np.exp(-b*(x-c)))
     return model
 
-
+## this is useful when we want to use differential prediction
 def lmdfunc(pars, x, y=None):
     a,b = pars['a'], pars['b']
     v = 1/(1+np.exp(-b*x))
@@ -66,6 +66,7 @@ def fit(x_tofit,y_tofit,func='Growth',daystofit=60,nfreq=7):
     b = dfit.params['b']
     c = dfit.params['c']
 
+    ## to look ahead
     nstd  = 3
     a_err = nstd*a.stderr
     b_err = nstd*b.stderr
