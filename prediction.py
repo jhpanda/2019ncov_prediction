@@ -34,7 +34,7 @@ def sigm(a,b,c,x):
 ## this is useful when we want to use differential prediction
 def lmdfunc(pars, x, y=None):
     a,b = pars['a'], pars['b']
-    v = 1/(1+np.exp(-b*x))
+    v = 1/(1+np.exp(-b*(x-c)))
     #da = 1-exp_v
     #db = a*x*exp_v
     da = v
@@ -49,8 +49,8 @@ def fit(x_tofit,y_tofit,func='Growth',daystofit=60,nfreq=7):
     x1 = x_tofit[-1]
     pars = Parameters()
     pars.add('a', value=y1,min=y1)
-    pars.add('b', value=0.,min=0.01)
-    pars.add('c', value=y0,min=1.)
+    pars.add('b', value=0.,min=0.)
+    pars.add('c', value=y0,min=0.)
   
     if func=='Growth':
         lfunc = lmfunc
@@ -60,7 +60,11 @@ def fit(x_tofit,y_tofit,func='Growth',daystofit=60,nfreq=7):
         growf = sigm
     mfit = Minimizer(lfunc,pars,fcn_args=(x_tofit,),fcn_kws={'y':y_tofit},reduce_fcn='neglogcauchy')
     nfit = mfit.minimize(method='nedeler')
+    #nfit = mfit.minimize(method='leastsq')
+    #nfit = mfit.leastsq()
     dfit = mfit.minimize(method='leastsq',params=nfit.params)
+
+    print(fit_report(dfit))
 
     a = dfit.params['a']
     b = dfit.params['b']
@@ -72,8 +76,6 @@ def fit(x_tofit,y_tofit,func='Growth',daystofit=60,nfreq=7):
     b_err = nstd*b.stderr
     c_err = nstd*c.stderr
 
-    #print(fit_report(dfit))
-    
     xfit = np.arange(0,daystofit,1.)
     yfit = lfunc(dfit.params, xfit)
 
@@ -128,6 +130,7 @@ if __name__ == '__main__':
     nfreq     = 3
     daystofit = 75
     func      = 'Growth'
+    #func      = 'Sigmoid'
     days,data = import_source()
     #days = days[0:-1]
     #data = data[0:-1]
