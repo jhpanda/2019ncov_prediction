@@ -15,4 +15,4 @@ Y(x) = Ym*(Y0/YM)^exp(-K*X)
 Y(x) = YM/(1+exp(-b*(x-c)))
 
 
-Sigmoid model cannot give a good estimation (data from 16/01/2020 - 10/02/2020)
+Gompertz growth would give worse results than Sigmoid model
