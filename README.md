@@ -15,4 +15,4 @@ Y(x) = Ym*(Y0/YM)^exp(-K*X)
 Y(x) = YM/(1+exp(-b*(x-c)))
 
 
-Gompertz growth would give worse results than Sigmoid model
+Gompertz growth would give "worse" situations of the outbreak than Sigmoid model
