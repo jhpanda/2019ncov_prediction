@@ -49,8 +49,8 @@ def fit(x_tofit,y_tofit,func='Growth',daystofit=60,nfreq=7):
     x1 = x_tofit[-1]
     pars = Parameters()
     pars.add('a', value=y1,min=y1)
-    pars.add('b', value=0.,min=0.01)
-    pars.add('c', value=y0,min=1.)
+    pars.add('b', value=0.,min=0.)
+    pars.add('c', value=y0,min=0.)
   
     if func=='Growth':
         lfunc = lmfunc
